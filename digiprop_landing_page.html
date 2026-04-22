@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiProp – Digital Property Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET & BASE ===================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',sans-serif;color:#0d1b2a;background:#fff;line-height:1.6;font-size:16px}
+
+/* ===================== CSS VARIABLES ===================== */
+:root{
+  --blue:#2563EB;
+  --blue-dark:#1d4ed8;
+  --blue-mid:#3b82f6;
+  --blue-light:#EFF6FF;
+  --blue-pale:#dbeafe;
+  --black:#0d1b2a;
+  --white:#ffffff;
+  --grey:#f8fafc;
+  --grey2:#e2e8f0;
+  --grey3:#94a3b8;
+  --text:#0d1b2a;
+  --muted:#64748b;
+  /* User type colours */
+  --broker:#2563EB;    --broker-bg:#EFF6FF;  --broker-border:#bfdbfe;
+  --surveyor:#0f766e;  --surveyor-bg:#f0fdf9; --surveyor-border:#99f6e4;
+  --estate:#7c3aed;    --estate-bg:#f5f3ff;  --estate-border:#ddd6fe;
+  --letting:#b45309;   --letting-bg:#fffbeb;  --letting-border:#fde68a;
+}
+
+/* ===================== TYPOGRAPHY ===================== */
+h1,h2,h3,h4{font-family:'Sora',sans-serif;font-weight:800;line-height:1.15;letter-spacing:-.02em}
+h1{font-size:clamp(36px,5vw,60px)}
+h2{font-size:clamp(28px,3.5vw,44px)}
+h3{font-size:clamp(20px,2.5vw,28px)}
+h4{font-size:18px;font-weight:600}
+p{font-weight:300;color:var(--muted);line-height:1.75}
+strong{font-weight:600;color:var(--text)}
+
+/* ===================== LAYOUT ===================== */
+.container{max-width:1160px;margin:0 auto;padding:0 32px}
+section{padding:80px 0}
+
+/* ===================== BUTTONS ===================== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:10px;font-size:15px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all .2s;letter-spacing:-.01em}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+.btn-outline:hover{background:var(--blue-light)}
+.btn-white{background:#fff;color:var(--blue)}
+.btn-white:hover{background:var(--blue-pale)}
+.btn-ghost-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4)}
+.btn-ghost-white:hover{background:rgba(255,255,255,.1)}
+.btn-sm{padding:9px 18px;font-size:13px;border-radius:8px}
+
+/* ===================== BADGES ===================== */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.04em}
+.badge-blue{background:var(--blue-light);color:var(--blue)}
+.badge-green{background:#dcfce7;color:#15803d}
+.badge-amber{background:#fef3c7;color:#92400e}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ===================== SECTION LABELS ===================== */
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:block}
+.section-title{margin-bottom:16px;color:var(--black)}
+.section-sub{font-size:17px;color:var(--muted);max-width:600px;margin:0 auto 52px;text-align:center;font-weight:300}
+
+/* ===================== NAV ===================== */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--grey2);padding:0 32px}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-logo img{height:44px;width:auto}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-right{display:flex;align-items:center;gap:10px}
+
+/* ===================== HERO ===================== */
+.hero{background:var(--black);padding:100px 0 80px;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(37,99,235,.18) 0%,transparent 65%)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;color:#60a5fa;letter-spacing:.06em;margin-bottom:24px}
+.hero h1{color:#fff;margin-bottom:20px}
+.hero h1 span{color:#60a5fa}
+.hero .hero-desc{font-size:18px;color:#94a3b8;margin-bottom:36px;font-weight:300;line-height:1.7}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero-visual{position:relative}
+.hero-card{background:#111827;border:1px solid #1e293b;border-radius:16px;padding:24px;margin-bottom:12px}
+.hero-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.hero-card-title{font-size:13px;font-weight:600;color:#fff}
+.hc-address{font-size:12px;color:#64748b;margin-bottom:14px}
+.hc-progress-bar{height:6px;background:#1e293b;border-radius:3px;margin-bottom:6px}
+.hc-progress-fill{height:100%;border-radius:3px;background:var(--blue)}
+.hc-progress-labels{display:flex;justify-content:space-between;font-size:11px;color:#64748b}
+.hc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.hc-stat{background:#0d1b2a;border-radius:8px;padding:10px;text-align:center}
+.hc-stat-val{font-size:20px;font-weight:800;color:#60a5fa;font-family:'Sora',sans-serif}
+.hc-stat-lbl{font-size:10px;color:#64748b;margin-top:2px}
+.hero-card-sm{background:#111827;border:1px solid #1e293b;border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px}
+.hero-icon-circle{width:36px;height:36px;border-radius:50%;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-card-sm-text{font-size:12px;color:#94a3b8;font-weight:300}
+.hero-card-sm-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px}
+
+/* ===================== IDR EXPLAINER ===================== */
+.idr-section{background:var(--grey);padding:80px 0}
+.idr-hero-box{background:var(--blue);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:52px}
+.idr-hero-box h2{color:#fff;margin-bottom:16px}
+.idr-hero-box p{color:#bfdbfe;font-size:16px;font-weight:300;line-height:1.75}
+.idr-visual{background:rgba(0,0,0,.2);border-radius:14px;padding:24px}
+.idr-visual-title{font-size:12px;color:#93c5fd;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.idr-room-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.idr-room{background:rgba(255,255,255,.08);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px}
+.idr-room-icon{width:28px;height:28px;border-radius:6px;background:rgba(37,99,235,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.idr-room-label{font-size:11px;color:#e2e8f0;font-weight:500}
+.idr-room-status{font-size:10px;color:#93c5fd;margin-top:1px}
+.idr-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.idr-pillar{background:#fff;border-radius:14px;padding:28px;border:1px solid var(--grey2)}
+.idr-pillar-num{font-size:42px;font-weight:800;color:var(--blue);font-family:'Sora',sans-serif;line-height:1;margin-bottom:12px}
+.idr-pillar h4{margin-bottom:8px;color:var(--black)}
+.idr-pillar p{font-size:13px;line-height:1.6}
+
+/* ===================== HOW IT WORKS ===================== */
+.how-section{background:var(--black);padding:80px 0}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:0}
+.how-step{padding:28px 24px;border:1px solid #1e293b;border-radius:14px;position:relative;transition:border-color .2s}
+.how-step:hover{border-color:#334155}
+.how-step-num{font-size:44px;font-weight:800;color:#0545ac;line-height:1;margin-bottom:14px;font-family:'Sora',sans-serif}
+.how-step h4{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.how-step p{font-size:13px;color:#64748b;font-weight:300;line-height:1.6}
+.how-dot{position:absolute;top:28px;right:24px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+
+/* ===================== USER TABS SECTION ===================== */
+.users-section{padding:80px 0;background:#fff}
+.user-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.utab{padding:12px 24px;border-radius:30px;font-size:14px;font-weight:600;cursor:pointer;border:2px solid var(--grey2);background:#fff;color:var(--muted);transition:all .2s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:8px}
+.utab:hover{border-color:var(--grey3);color:var(--text)}
+.utab svg{width:16px;height:16px}
+.utab.active-broker{background:var(--broker-bg);color:var(--broker);border-color:var(--broker)}
+.utab.active-surveyor{background:var(--surveyor-bg);color:var(--surveyor);border-color:var(--surveyor)}
+.utab.active-estate{background:var(--estate-bg);color:var(--estate);border-color:var(--estate)}
+.utab.active-letting{background:var(--letting-bg);color:var(--letting);border-color:var(--letting)}
+.user-panel{display:none}
+.user-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.up-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:18px;letter-spacing:.06em;text-transform:uppercase}
+.up-tag-broker{background:var(--broker-bg);color:var(--broker)}
+.up-tag-surveyor{background:var(--surveyor-bg);color:var(--surveyor)}
+.up-tag-estate{background:var(--estate-bg);color:var(--estate)}
+.up-tag-letting{background:var(--letting-bg);color:var(--letting)}
+.user-panel h3{color:var(--black);margin-bottom:16px;font-size:30px}
+.user-panel .up-desc{font-size:16px;color:var(--muted);margin-bottom:28px;font-weight:300;line-height:1.75}
+.benefits-list{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.benefit{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:12px;background:var(--grey);border:1px solid transparent;transition:border-color .2s}
+.benefit:hover{border-color:var(--grey2)}
+.benefit-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.benefit-icon svg{width:16px;height:16px}
+.benefit-body h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.benefit-body p{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300}
+.up-cta{display:flex;gap:10px;flex-wrap:wrap}
+.up-visual{border-radius:18px;padding:28px}
+.up-visual-broker{background:var(--broker-bg)}
+.up-visual-surveyor{background:var(--surveyor-bg)}
+.up-visual-estate{background:var(--estate-bg)}
+.up-visual-letting{background:var(--letting-bg)}
+.up-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.up-stat{background:#fff;border-radius:12px;padding:16px;text-align:center;border:1px solid var(--grey2)}
+.up-stat-val{font-size:26px;font-weight:800;font-family:'Sora',sans-serif;line-height:1;margin-bottom:4px}
+.up-stat-lbl{font-size:11px;color:var(--muted);font-weight:300}
+.up-quote{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--grey2)}
+.up-quote-text{font-size:14px;color:var(--text);line-height:1.65;margin-bottom:12px;font-family:'Lora',serif;font-style:italic}
+.up-quote-author{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.up-checklist{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--grey2);margin-bottom:12px}
+.up-checklist-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.up-check-item{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;font-weight:500;color:var(--text)}
+.up-check-item:last-child{margin-bottom:0}
+.check-circle{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ===================== INSTRUCT SECTION ===================== */
+.instruct-section{background:var(--grey);padding:80px 0}
+.instruct-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.instruct-steps{display:flex;flex-direction:column;gap:20px;margin:28px 0}
+.istep{display:flex;gap:18px;align-items:flex-start}
+.istep-circle{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.istep-body h4{font-size:15px;font-weight:600;color:var(--black);margin-bottom:4px}
+.istep-body p{font-size:13px;color:var(--muted);font-weight:300;line-height:1.6}
+.survey-types{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px}
+.stype{background:#fff;border-radius:12px;padding:16px;text-align:center;border:2px solid var(--grey2);cursor:pointer;transition:all .2s}
+.stype.selected{border-color:var(--blue);background:var(--blue-light)}
+.stype-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.stype-title{font-size:13px;font-weight:700;color:var(--text)}
+.stype.selected .stype-title{color:var(--blue)}
+.portal-mockup{background:var(--black);border-radius:18px;padding:28px;overflow:hidden}
+.pm-bar{display:flex;gap:6px;margin-bottom:20px}
+.pm-dot{width:10px;height:10px;border-radius:50%}
+.pm-dot-r{background:#ef4444}
+.pm-dot-y{background:#f59e0b}
+.pm-dot-g{background:#22c55e}
+.pm-title{font-size:11px;color:#64748b;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.pm-row{display:flex;align-items:center;justify-content:space-between;background:#111827;border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid #1e293b}
+.pm-addr{font-size:13px;color:#e2e8f0;font-weight:500}
+.pm-sub{font-size:11px;color:#64748b;margin-top:1px}
+.pm-status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:12px}
+.pm-delivered{background:#14532d;color:#86efac}
+.pm-progress{background:#1e3a5f;color:#60a5fa}
+.pm-assigned{background:#1c1917;color:#d97706}
+.pm-new{background:#1e293b;color:#94a3b8}
+.pm-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.pm-btn{padding:10px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;cursor:pointer;font-family:'Sora',sans-serif;border:none}
+.pm-btn-blue{background:var(--blue);color:#fff}
+.pm-btn-outline{background:transparent;color:#60a5fa;border:1px solid #1e3a5f}
+
+/* ===================== TRUST BAR ===================== */
+.trust-bar{background:#fff;padding:40px 0;border-top:1px solid var(--grey2);border-bottom:1px solid var(--grey2)}
+.trust-items{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--muted)}
+.trust-item svg{width:20px;height:20px;color:var(--blue)}
+
+/* ===================== DEVELOPER NOTES ===================== */
+.dev-section{background:#0f172a;padding:80px 0}
+.dev-section .section-eyebrow{color:#60a5fa}
+.dev-section .section-title{color:#fff;text-align:left}
+.dev-section .section-sub{text-align:left;color:#64748b;margin:0 0 40px}
+.dev-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dev-card{background:#1e293b;border-radius:14px;padding:24px;border:1px solid #334155}
+.dev-card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dev-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;background:#2563EB;color:#fff}
+.dev-badge-green{background:#065f46;color:#6ee7b7}
+.dev-badge-amber{background:#78350f;color:#fcd34d}
+.dev-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.dev-list li{font-size:13px;color:#94a3b8;padding-left:16px;position:relative;font-weight:300;line-height:1.5}
+.dev-list li::before{content:'→';position:absolute;left:0;color:#3b82f6}
+.dev-component-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dev-comp{background:#0f172a;border-radius:8px;padding:10px 14px;font-size:12px;color:#60a5fa;font-weight:500;border:1px solid #1e293b}
+
+/* ===================== FOOTER CTA ===================== */
+.footer-cta{background:var(--blue);padding:80px 0;text-align:center}
+.footer-cta h2{color:#fff;margin-bottom:16px}
+.footer-cta p{color:#bfdbfe;font-size:17px;font-weight:300;max-width:520px;margin:0 auto 36px;line-height:1.7}
+.footer-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ===================== FOOTER ===================== */
+footer{background:#0d1b2a;padding:40px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo img{height:32px}
+footer p{font-size:13px;color:#475569}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:#475569;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#fff}
+
+/* ===================== UTILITIES ===================== */
+.text-center{text-align:center}
+.mt-8{margin-top:8px}
+.divider{height:1px;background:var(--grey2);margin:60px 0}
+.icon-svg svg{width:20px;height:20px}
+
+/* ===================== RESPONSIVE ===================== */
+
+/* Tablets */
+@media (max-width: 1024px){
+  .container{padding:0 20px}
+
+  .hero-grid,
+  .idr-hero-box,
+  .user-panel,
+  .instruct-grid,
+  .dev-grid{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  .how-steps{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .idr-pillars{
+    grid-template-columns:1fr;
+  }
+
+  .survey-types{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 768px){
+
+  /* NAV */
+  nav{padding:0 16px}
+  .nav-links{display:none} /* hide menu (simple version) */
+  .nav-inner{height:64px}
+
+  /* HERO */
+  .hero{padding:80px 0 60px}
+  .hero-grid{gap:32px}
+  .hero h1{font-size:32px}
+  .hero .hero-desc{font-size:15px}
+
+  /* CARDS */
+  .hero-card{padding:18px}
+  .hero-card-sm{padding:12px}
+
+  /* SECTIONS */
+  section{padding:60px 0}
+
+  /* HOW STEPS */
+  .how-steps{
+    grid-template-columns:1fr;
+  }
+
+  /* USER PANELS */
+  .user-panel{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+
+  /* TABS */
+  .user-tabs{
+    gap:6px;
+  }
+  .utab{
+    padding:10px 14px;
+    font-size:12px;
+  }
+
+  /* GRID FIXES */
+  .hc-stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .up-stat-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .survey-types{
+    grid-template-columns:1fr;
+  }
+
+  /* IDR */
+  .idr-room-grid{
+    grid-template-columns:1fr;
+  }
+
+  /* FOOTER */
+  .footer-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .footer-links{
+    gap:12px;
+  }
+
+  /* BUTTONS */
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .hero-btns,
+  .footer-cta-btns,
+  .up-cta{
+    flex-direction:column;
+    width:100%;
+  }
+}
+
+
+/* Small phones */
+@media (max-width: 480px){
+
+  h1{font-size:28px}
+  h2{font-size:24px}
+
+  .container{padding:0 16px}
+
+  .hero{padding:70px 0 50px}
+
+  .idr-hero-box{
+    padding:24px;
+  }
+
+  .up-visual{
+    padding:20px;
+  }
+
+  .pm-row{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+  }
+
+  .pm-actions{
+    grid-template-columns:1fr;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="Logo_V1_3x.jpg" alt="DigiProp – Digital Property Solutions" onerror="this.style.display='none';document.getElementById('nav-logo-fallback').style.display='flex'">
+      <div id="nav-logo-fallback" style="display:none;align-items:center;gap:8px">
+  <div style="width:36px;height:36px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+    <img src="/loginlogo.png" alt="DiGiPROP Logo" style="width:100%;height:100%;">
+  </div>
+  <span style="font-size:20px;font-weight:800;color:var(--black);letter-spacing:-.03em">
+    DiGiPROP
+  </span>
+</div>
+    </div>
+    <div class="nav-links">
+      <a href="#what-is-idr">What is an IDR?</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#who-we-help">Who we help</a>
+      <a href="#instruct">Instruct a survey</a>
+    </div>
+    <div class="nav-right">
+      <a href="#who-we-help" class="btn btn-outline btn-sm">Sign In</a>
+      <a href="#instruct" class="btn btn-primary btn-sm">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <span>UK's only Interactive Digital Report</span>
+        </div>
+        <h1>Property surveys.<br><span>Reimagined.</span></h1>
+        <p class="hero-desc">DigiProp delivers immersive 360° Interactive Digital Reports for homebuyers, mortgage brokers, estate agents, surveyors and letting agents — all on one intelligent platform.</p>
+        <div class="hero-btns">
+          <a href="#instruct" class="btn btn-primary">Instruct a survey</a>
+          <a href="#what-is-idr" class="btn btn-ghost-white">What is an IDR?</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="hero-card-title">14 Elmwood Close, Bristol BS6</span>
+            <span class="badge badge-green"><span class="badge-dot"></span>IDR Ready</span>
+          </div>
+          <div class="hc-address">3-bed semi-detached · Linked to: Harlow Mortgages Ltd</div>
+          <div class="hc-progress-bar"><div class="hc-progress-fill" style="width:85%"></div></div>
+          <div class="hc-progress-labels"><span>360° capture complete</span><span>85%</span></div>
+          <div class="hc-stats">
+            <div class="hc-stat"><div class="hc-stat-val">24</div><div class="hc-stat-lbl">Images captured</div></div>
+            <div class="hc-stat"><div class="hc-stat-val">8</div><div class="hc-stat-lbl">Rooms surveyed</div></div>
+            <div class="hc-stat"><div class="hc-stat-val">L2</div><div class="hc-stat-lbl">RICS survey</div></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="hero-card-sm">
+            <div class="hero-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#60a5fa" stroke-width="1.5"><path d="M8 2a6 6 0 100 12A6 6 0 008 2z"/><path d="M8 5v3l2 2" stroke-linecap="round"/></svg>
+            </div>
+            <div><div class="hero-card-sm-title">48hr turnaround</div><div class="hero-card-sm-text">Average delivery time</div></div>
+          </div>
+          <div class="hero-card-sm">
+            <div class="hero-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#60a5fa" stroke-width="1.5"><path d="M3 8l3 3 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div><div class="hero-card-sm-title">UK coverage</div><div class="hero-card-sm-text">Nationwide Digisnappers</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST BAR
+============================================================ -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-items">
+      <div class="trust-item">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm3.5 5.5l-4 4-1.5-1.5a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5a.75.75 0 10-1.06-1.06z"/></svg>
+        UK's only IDR provider
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm3.5 5.5l-4 4-1.5-1.5a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5a.75.75 0 10-1.06-1.06z"/></svg>
+        IP-protected technology
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm3.5 5.5l-4 4-1.5-1.5a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5a.75.75 0 10-1.06-1.06z"/></svg>
+        RICS Level 2 &amp; 3 surveys
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm3.5 5.5l-4 4-1.5-1.5a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5a.75.75 0 10-1.06-1.06z"/></svg>
+        Renters Rights Bill compliant
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm3.5 5.5l-4 4-1.5-1.5a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5a.75.75 0 10-1.06-1.06z"/></svg>
+        Partnered with Revolut
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     WHAT IS AN IDR
+============================================================ -->
+<section class="idr-section" id="what-is-idr">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-eyebrow">The IDR explained</span>
+      <h2 class="section-title">What is an Interactive Digital Report?</h2>
+    </div>
+    <div class="idr-hero-box">
+      <div>
+        <h2 style="font-size:32px">An IDR is a fully immersive, 360° digital property report — unlike anything else in the UK.</h2>
+        <p style="margin-top:16px">Instead of a static PDF, an Interactive Digital Report lets buyers, lenders and agents explore a property room by room in full 360° — on any device, anywhere. Every IDR is captured on-site by a trained DigiSnapper, reviewed by a RICS-accredited surveyor, and delivered through the DigiProp platform. No other company in the UK provides this technology.</p>
+        <div style="margin-top:28px;display:flex;gap:10px;flex-wrap:wrap">
+          <a href="#instruct" class="btn btn-white">Instruct your first IDR</a>
+          <a href="#who-we-help" class="btn btn-ghost-white">See who benefits</a>
+        </div>
+      </div>
+      <div class="idr-visual">
+        <div class="idr-visual-title">IDR — property capture in progress</div>
+        <div class="idr-room-grid">
+          <div class="idr-room"><div class="idr-room-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#93c5fd" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 6.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="idr-room-label">Living room</div><div class="idr-room-status">✓ 360° captured</div></div></div>
+          <div class="idr-room"><div class="idr-room-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#93c5fd" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 6.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="idr-room-label">Kitchen</div><div class="idr-room-status">✓ 360° captured</div></div></div>
+          <div class="idr-room"><div class="idr-room-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#93c5fd" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 6.5l2 2 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="idr-room-label">Master bedroom</div><div class="idr-room-status">✓ 360° captured</div></div></div>
+          <div class="idr-room"><div class="idr-room-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#fbbf24" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M6.5 4v3" stroke-linecap="round"/><circle cx="6.5" cy="9" r=".5" fill="#fbbf24"/></svg></div><div><div class="idr-room-label">Loft space</div><div class="idr-room-status">⏳ In progress</div></div></div>
+        </div>
+        <div style="margin-top:12px;background:rgba(0,0,0,.2);border-radius:8px;padding:12px;font-size:12px;color:#93c5fd">
+          <strong style="color:#fff;font-size:11px;display:block;margin-bottom:4px">RICS Surveyor note</strong>
+          Roof void accessible. Minor condensation noted on north-facing slope. Insulation depth adequate. Full report being generated via AI assist.
+        </div>
+      </div>
+    </div>
+    <div class="idr-pillars">
+      <div class="idr-pillar">
+        <div class="idr-pillar-num">360°</div>
+        <h4>Fully immersive capture</h4>
+        <p>Every room, every angle — explored interactively by buyers, lenders and agents on any device. Far beyond a standard survey PDF.</p>
+      </div>
+      <div class="idr-pillar">
+        <div class="idr-pillar-num">AI</div>
+        <h4>AI-assisted survey writing</h4>
+        <p>Our AI tool pre-populates RICS Level 2 reports from the photographic record, reducing surveyor time and accelerating delivery.</p>
+      </div>
+      <div class="idr-pillar">
+        <div class="idr-pillar-num">IP</div>
+        <h4>Exclusively DigiProp</h4>
+        <p>The IDR is IP-protected. No other company in the UK offers this technology — making it a genuine competitive advantage for every partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+<section class="how-section" id="how-it-works">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-eyebrow" style="color:#2276db">How it works</span>
+      <h2 class="section-title" style="color:#fff;margin-bottom:12px">From instruction to report in 4 steps</h2>
+      <p class="section-sub" style="color:#64748b">Simple to use. Powerful results. Track every step live in your portal.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-dot"></div><div class="how-step-num">01</div><h4>Instruct us</h4><p>Log in to your DigiProp portal. Enter the property address and select your report type — IDR, RICS Level 2, or Level 3. Takes under 3 minutes.</p></div>
+      <div class="how-step"><div class="how-dot"></div><div class="how-step-num">02</div><h4>We deploy</h4><p>A trained DigiSnapper attends the property and captures a full 360° and 2D photographic record of every room, service and external area.</p></div>
+      <div class="how-step"><div class="how-dot"></div><div class="how-step-num">03</div><h4>Survey review</h4><p>A RICS-accredited surveyor reviews the complete capture using our AI-assisted report writing tool and produces the client's report.</p></div>
+      <div class="how-step"><div class="how-dot"></div><div class="how-step-num">04</div><h4>IDR delivered</h4><p>Your Interactive Digital Report lands in the portal — immersive, 360°, and shareable with buyers, lenders and clients instantly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHO WE HELP – TABBED SECTION
+============================================================ -->
+<section class="users-section" id="who-we-help">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-eyebrow">Who we help</span>
+      <h2 class="section-title">Built for every property professional</h2>
+      <p class="section-sub">Select your role below to see exactly how DigiProp works for you.</p>
+    </div>
+
+    <div class="user-tabs">
+      <button class="utab active-broker" onclick="showUser('broker',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="14" height="9" rx="2"/><path d="M5 4V3a2 2 0 014 0v1" stroke-linecap="round"/></svg>
+        Mortgage Brokers
+      </button>
+      <button class="utab" onclick="showUser('surveyor',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="2" width="10" height="12" rx="1.5"/><path d="M5 6h6M5 9h4" stroke-linecap="round"/></svg>
+        Surveyors
+      </button>
+      <button class="utab" onclick="showUser('estate',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7L8 2l6 5v7a1 1 0 01-1 1H3a1 1 0 01-1-1V7z"/><path d="M6 14V9h4v5" stroke-linecap="round"/></svg>
+        Estate Agents
+      </button>
+      <button class="utab" onclick="showUser('letting',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2L2 6v8h4v-4h4v4h4V6L8 2z"/><circle cx="8" cy="8" r="1.5"/></svg>
+        Letting Agents &amp; Housing Associations
+      </button>
+    </div>
+
+    <!-- BROKER PANEL -->
+    <div class="user-panel active" id="panel-broker">
+      <div>
+        <div class="up-tag up-tag-broker">Mortgage Brokers</div>
+        <h3>Earn more. Serve better. Fulfil your Consumer Duty.</h3>
+        <p class="up-desc">DigiProp gives mortgage brokers a completely hands-off way to add real value for clients — with uncapped referral fees, a unique interactive survey product, and a quick-quote solution that does the work for you.</p>
+        <div class="benefits-list">
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--broker-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--broker)" stroke-width="1.8" stroke-linecap="round"><path d="M8 2v12M5 4h4.5a2.5 2.5 0 010 5H5m0 0h3a2.5 2.5 0 010 5H5"/></svg></div>
+            <div class="benefit-body"><h4>Earn uncapped referral fees</h4><p>Every survey you refer through DigiProp earns you a referral fee with no upper limit. A simple, passive revenue stream that grows with your client base.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--broker-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--broker)" stroke-width="1.8" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg></div>
+            <div class="benefit-body"><h4>Fulfil your Consumer Duty obligations</h4><p>Surveys are an essential part of Consumer Duty. DigiProp makes it easy to recommend and facilitate a professional survey for every mortgage client.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--broker-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--broker)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M5 8h6M5 11h3"/></svg></div>
+            <div class="benefit-body"><h4>Offer a unique interactive digital survey</h4><p>Give your clients something no other broker offers — a 360° Interactive Digital Report they can explore on any device, before they commit to buying.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--broker-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--broker)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+            <div class="benefit-body"><h4>Completely hands-off with Quick Quote</h4><p>Our unique Quick Quote solution handles everything. Embed the link, share with your client, and we take care of the rest — zero admin for you.</p></div>
+          </div>
+        </div>
+        <div class="up-cta">
+          <a href="#instruct" class="btn btn-primary">Instruct a survey</a>
+          <a href="#" class="btn btn-outline">Get your Quick Quote link</a>
+        </div>
+      </div>
+      <div>
+        <div class="up-visual up-visual-broker">
+          <div class="up-stat-grid">
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--broker)">Uncapped</div><div class="up-stat-lbl">Referral fees available</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--broker)">48hrs</div><div class="up-stat-lbl">Average IDR turnaround</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--broker)">L2+L3</div><div class="up-stat-lbl">RICS surveys available</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--broker)">0</div><div class="up-stat-lbl">Admin required from you</div></div>
+          </div>
+          <div class="up-checklist">
+            <div class="up-checklist-title">What you get as a broker partner</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--broker-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--broker)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Your own broker referral portal</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--broker-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--broker)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Quick Quote embed link for your website</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--broker-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--broker)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Real-time job tracking dashboard</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--broker-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--broker)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Monthly referral fee statements</div>
+          </div>
+          <div class="up-quote">
+            <div class="up-quote-text">"DigiProp's Quick Quote link has become part of our standard client onboarding. We refer, they instruct, we earn — completely hands off."</div>
+            <div class="up-quote-author">MORTGAGE BROKER, LONDON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURVEYOR PANEL -->
+    <div class="user-panel" id="panel-surveyor">
+      <div>
+        <div class="up-tag up-tag-surveyor">Surveyors &amp; Survey Firms</div>
+        <h3>Increase your prices. Escape the race to the bottom.</h3>
+        <p class="up-desc">DigiProp partners with RICS-accredited surveyors and survey firms across the UK — giving you a consistent pipeline of instructed work, AI-assisted report writing, and the ability to offer cutting-edge IDR technology to your own clients.</p>
+        <div class="benefits-list">
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--surveyor-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--surveyor)" stroke-width="1.8" stroke-linecap="round"><path d="M2 12l4-5 3 3 3-4 3 3"/></svg></div>
+            <div class="benefit-body"><h4>Increase your survey prices</h4><p>Adding an IDR to your service is a genuine differentiator. Justify premium pricing and avoid the damaging race to the bottom on standard survey fees.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--surveyor-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--surveyor)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 10h4"/></svg></div>
+            <div class="benefit-body"><h4>AI-assisted RICS Level 2 report writing</h4><p>Our AI tool pre-populates your RICS reports from the DigiSnapper photographic record — dramatically cutting report writing time for your team.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--surveyor-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--surveyor)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg></div>
+            <div class="benefit-body"><h4>Consistent instructed pipeline</h4><p>We pass work directly to you within your coverage area. No pitching, no business development — just a steady stream of instructed survey jobs.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--surveyor-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--surveyor)" stroke-width="1.8" stroke-linecap="round"><path d="M3 4h10M3 8h7M3 12h5"/></svg></div>
+            <div class="benefit-body"><h4>Add IDR to your own client offer</h4><p>Register on the DigiProp portal, purchase Digicoins, and offer Interactive Digital Reports directly to your clients. Ask us how.</p></div>
+          </div>
+        </div>
+        <div class="up-cta">
+          <a href="#" class="btn btn-primary" style="background:var(--surveyor);border-color:var(--surveyor)">Partner with DigiProp</a>
+          <a href="#" class="btn btn-outline" style="color:var(--surveyor);border-color:var(--surveyor)">Ask us how to add IDR</a>
+        </div>
+      </div>
+      <div>
+        <div class="up-visual up-visual-surveyor">
+          <div class="up-stat-grid">
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--surveyor)">AI</div><div class="up-stat-lbl">RICS L2 pre-population</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--surveyor)">360°</div><div class="up-stat-lbl">Full pre-capture supplied</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--surveyor)">UK</div><div class="up-stat-lbl">Nationwide work available</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--surveyor)">+</div><div class="up-stat-lbl">Premium pricing justified</div></div>
+          </div>
+          <div class="up-checklist">
+            <div class="up-checklist-title">Your surveyor partner benefits</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--surveyor-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--surveyor)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Work within your specified coverage area</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--surveyor-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--surveyor)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>AI report assistant included</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--surveyor-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--surveyor)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>360° capture delivered before review</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--surveyor-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--surveyor)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Offer IDR to your own clients via portal</div>
+          </div>
+          <div class="up-quote">
+            <div class="up-quote-text">"The AI report writing tool has halved the time our team spends on each report. The pre-captured 360° images mean we review from a complete visual record every time."</div>
+            <div class="up-quote-author">SURVEY DIRECTOR, MIDLANDS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESTATE PANEL -->
+    <div class="user-panel" id="panel-estate">
+      <div>
+        <div class="up-tag up-tag-estate">Estate Agents</div>
+        <h3>Win more instructions. Keep chains moving. Earn referral fees.</h3>
+        <p class="up-desc">DigiProp gives estate agents a powerful differentiator — offering buyers full interactive digital surveys completed quickly to keep transactions on track, while you earn a referral fee for every survey instructed.</p>
+        <div class="benefits-list">
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--estate-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--estate)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M5 8h6M5 11h4"/></svg></div>
+            <div class="benefit-body"><h4>Offer buyers full interactive digital surveys</h4><p>Stand apart from every other agent. Give buyers an immersive 360° IDR they can explore from home — before they commit, keeping confidence high.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--estate-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--estate)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+            <div class="benefit-body"><h4>Completed quickly to keep chains moving</h4><p>Our 48-hour average turnaround means surveys don't delay your transactions. Faster surveys mean faster completions and happier clients.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--estate-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--estate)" stroke-width="1.8" stroke-linecap="round"><path d="M8 2v12M5 4h4.5a2.5 2.5 0 010 5H5m0 0h3a2.5 2.5 0 010 5H5"/></svg></div>
+            <div class="benefit-body"><h4>Earn a referral fee for every survey</h4><p>Every survey you refer through DigiProp earns your agency a referral fee. Simple, recurring additional revenue with no extra workload.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--estate-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--estate)" stroke-width="1.8" stroke-linecap="round"><path d="M2 14V7l6-5 6 5v7M6 14v-5h4v5"/></svg></div>
+            <div class="benefit-body"><h4>Prepare for sellers packs — register now</h4><p>With sellers packs on the horizon, DigiProp positions your agency ahead of the curve. Register today to be ready when the market shifts.</p></div>
+          </div>
+        </div>
+        <div class="up-cta">
+          <a href="#" class="btn btn-primary" style="background:var(--estate);border-color:var(--estate)">Register your agency</a>
+          <a href="#instruct" class="btn btn-outline" style="color:var(--estate);border-color:var(--estate)">Instruct a survey</a>
+        </div>
+      </div>
+      <div>
+        <div class="up-visual up-visual-estate">
+          <div class="up-stat-grid">
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--estate)">48hrs</div><div class="up-stat-lbl">Average turnaround</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--estate)">£</div><div class="up-stat-lbl">Referral fee per survey</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--estate)">360°</div><div class="up-stat-lbl">Interactive buyer reports</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--estate)">Ready</div><div class="up-stat-lbl">For sellers packs</div></div>
+          </div>
+          <div class="up-checklist">
+            <div class="up-checklist-title">Estate agent partner benefits</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--estate-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--estate)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Branded IDR links for your listings</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--estate-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--estate)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Referral fee on every instruction</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--estate-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--estate)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Sellers pack preparation tool</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--estate-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--estate)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>No upfront cost to register</div>
+          </div>
+          <div class="up-quote">
+            <div class="up-quote-text">"We've used DigiProp on every instruction. Vendors love it, buyers love it — and the referral fees have become a meaningful revenue line for our branch."</div>
+            <div class="up-quote-author">BRANCH MANAGER, BRISTOL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LETTING PANEL -->
+    <div class="user-panel" id="panel-letting">
+      <div>
+        <div class="up-tag up-tag-letting">Letting Agents &amp; Housing Associations</div>
+        <h3>Fully compliant digital inventories and inspections. Anywhere in the UK.</h3>
+        <p class="up-desc">DigiProp produces fully compliant digital interactive inventories, mid-tenancy inspections and stock condition reports — compliant with the Renters Rights Bill and Rent Smart Wales guidance, delivered anywhere in the UK.</p>
+        <div class="benefits-list">
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--letting-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--letting)" stroke-width="1.8" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg></div>
+            <div class="benefit-body"><h4>Fully compliant digital inventories</h4><p>Every inventory and inspection report is produced to the highest digital standard — fully compliant with the Renters Rights Bill and Rent Smart Wales guidance.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--letting-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--letting)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h6M5 5h6M5 11h3"/></svg></div>
+            <div class="benefit-body"><h4>Interactive inspections and stock condition reports</h4><p>Mid-tenancy inspections and full stock condition reports delivered as interactive 360° digital documents — accessible, shareable and legally robust.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--letting-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--letting)" stroke-width="1.8" stroke-linecap="round"><path d="M8 2L2 6v8h4V9h4v5h4V6L8 2z"/></svg></div>
+            <div class="benefit-body"><h4>Anywhere in the UK</h4><p>Our nationwide DigiSnapper network means we can attend any property in England, Scotland, Wales and Northern Ireland — no coverage gaps.</p></div>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon" style="background:var(--letting-bg)"><svg viewBox="0 0 16 16" fill="none" stroke="var(--letting)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="6" r="3"/><path d="M3 14c0-3 2.5-5 5-5s5 2 5 5"/></svg></div>
+            <div class="benefit-body"><h4>Protect landlords. Reduce disputes.</h4><p>A timestamped, immersive 360° record of property condition provides irrefutable evidence — dramatically reducing deposit disputes and protecting your landlord clients.</p></div>
+          </div>
+        </div>
+        <div class="up-cta">
+          <a href="#" class="btn btn-primary" style="background:var(--letting);border-color:var(--letting)">Get started today</a>
+          <a href="#" class="btn btn-outline" style="color:var(--letting);border-color:var(--letting)">Request a sample report</a>
+        </div>
+      </div>
+      <div>
+        <div class="up-visual up-visual-letting">
+          <div class="up-stat-grid">
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--letting)">100%</div><div class="up-stat-lbl">Renters Rights compliant</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--letting)">UK</div><div class="up-stat-lbl">Nationwide coverage</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--letting)">360°</div><div class="up-stat-lbl">Timestamped evidence</div></div>
+            <div class="up-stat"><div class="up-stat-val" style="color:var(--letting)">Wales</div><div class="up-stat-lbl">Rent Smart compliant</div></div>
+          </div>
+          <div class="up-checklist">
+            <div class="up-checklist-title">What we provide for letting agents</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--letting-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--letting)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Check-in and check-out inventories</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--letting-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--letting)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Mid-tenancy inspection reports</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--letting-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--letting)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Stock condition reports (housing associations)</div>
+            <div class="up-check-item"><div class="check-circle" style="background:var(--letting-bg)"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--letting)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All reports legally compliant and timestamped</div>
+          </div>
+          <div class="up-quote">
+            <div class="up-quote-text">"DigiProp's 360° inventories have saved us hours every month and virtually eliminated deposit disputes. Our landlords are delighted and our compliance team have peace of mind."</div>
+            <div class="up-quote-author">LETTINGS MANAGER, MANCHESTER</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INSTRUCT A SURVEY
+============================================================ -->
+<section class="instruct-section" id="instruct">
+  <div class="container">
+    <div class="instruct-grid">
+      <div>
+        <span class="section-eyebrow">Instruct a survey</span>
+        <h2>Any property. Any survey type. One platform.</h2>
+        <p>Simply tell us the property address and what you need. We handle everything — from DigiSnapper dispatch and 360° capture through to surveyor review and IDR delivery.</p>
+
+        <div class="instruct-steps">
+          <div class="istep"><div class="istep-circle">1</div><div class="istep-body"><h4>Enter the property address</h4><p>Log in to your portal and submit the property details. Under 3 minutes to instruct.</p></div></div>
+          <div class="istep"><div class="istep-circle">2</div><div class="istep-body"><h4>Choose your report type</h4><p>Select a 360° IDR, RICS Level 2 Homebuyer Report, or Level 3 Building Survey — or add a RICS survey on top of an IDR.</p></div></div>
+          <div class="istep"><div class="istep-circle">3</div><div class="istep-body"><h4>We dispatch your DigiSnapper</h4><p>Our field team attends and captures everything. You track progress live in your portal.</p></div></div>
+          <div class="istep"><div class="istep-circle">4</div><div class="istep-body"><h4>Receive your IDR or survey report</h4><p>Delivered directly through the platform, ready to share with buyers, lenders and clients.</p></div></div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Select survey type</div>
+          <div class="survey-types">
+            <div class="stype selected" onclick="selectType(this)"><div class="stype-label">Most popular</div><div class="stype-title">360° IDR</div></div>
+            <div class="stype" onclick="selectType(this)"><div class="stype-label">RICS standard</div><div class="stype-title">Level 2</div></div>
+            <div class="stype" onclick="selectType(this)"><div class="stype-label">Full structural</div><div class="stype-title">Level 3</div></div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary">Instruct your survey now</a>
+      </div>
+      <div class="portal-mockup">
+        <div class="pm-bar"><div class="pm-dot pm-dot-r"></div><div class="pm-dot pm-dot-y"></div><div class="pm-dot pm-dot-g"></div></div>
+        <div class="pm-title">DigiProp portal — recent instructions</div>
+        <div class="pm-row">
+          <div><div class="pm-addr">14 Elmwood Close, Bristol</div><div class="pm-sub">3-bed semi · IDR + RICS L2</div></div>
+          <div class="pm-status pm-delivered">IDR delivered</div>
+        </div>
+        <div class="pm-row">
+          <div><div class="pm-addr">7 Oak Street, Leeds</div><div class="pm-sub">2-bed flat · 360° IDR</div></div>
+          <div class="pm-status pm-progress">Surveyor reviewing</div>
+        </div>
+        <div class="pm-row">
+          <div><div class="pm-addr">22 Maple Ave, Manchester</div><div class="pm-sub">4-bed detached · RICS L3</div></div>
+          <div class="pm-status pm-assigned">DigiSnapper assigned</div>
+        </div>
+        <div class="pm-row">
+          <div><div class="pm-addr">9 Harbour View, Brighton</div><div class="pm-sub">1-bed flat · 360° IDR</div></div>
+          <div class="pm-status pm-new">Instruction received</div>
+        </div>
+        <div class="pm-actions">
+          <button class="pm-btn pm-btn-blue">+ New instruction</button>
+          <button class="pm-btn pm-btn-outline">View all jobs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ============================================================
+     FOOTER CTA
+============================================================ -->
+<section class="footer-cta">
+  <div class="container">
+    <h2>Ready to get started?</h2>
+    <p>Join mortgage brokers, surveyors, estate agents and letting agents already using DigiProp to deliver better property reports, faster — and earn more while doing it.</p>
+    <div class="footer-cta-btns">
+      <a href="#" class="btn btn-white">Create your account</a>
+      <a href="#" class="btn btn-ghost-white">Talk to our team</a>
+      <a href="#instruct" class="btn btn-ghost-white">Instruct a survey</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <img src="Logo_V1_3x.jpg" alt="DigiProp" style="height:28px" onerror="this.style.display='none'">
+        <p style="margin-top:6px">© 2026 DigiProp · digiprop.co.uk · info@digiprop.co.uk</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of use</a>
+        <a href="#">Support</a>
+        <a href="#">Become a DigiSnapper</a>
+        <a href="#">Partner with us</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+function showUser(type, btn) {
+  document.querySelectorAll('.user-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.utab').forEach(b => {
+    b.className = 'utab';
+  });
+  document.getElementById('panel-' + type).classList.add('active');
+  btn.classList.add('active-' + type);
+}
+
+function selectType(el) {
+  document.querySelectorAll('.stype').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+</body>
+</html>
